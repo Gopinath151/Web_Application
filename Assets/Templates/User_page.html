@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user_login</title>
+</head>
+<style>
+  .outermost-container{
+  width:auto;
+  height:95vh;
+  display:flex;
+  flex-direction:column;
+  }
+  .appinfo-details{
+     display:none;
+    }
+
+  .outer-container{
+  width:auto;
+  height:95px;
+  text-align:center;
+  }
+  .content-container{
+  width: auto;
+  height:auto;
+  flex:1;
+  background-color: grey;
+  display:flex;
+  }
+  .button-container{
+  width:auto;
+  height:auto;
+  flex:1;
+  }
+  .app-container{
+  width:auto;
+  height:75vh;
+  flex:4;
+  background-color:white;
+  margin-top:60px;
+  border:2px solid;
+  overflow:scroll;
+  }
+  .inner-block{
+  width:700px;
+  height:100px;
+  margin:30px;
+  background-color:grey;
+  border:2px solid;
+  display:flex;
+  flex-direction:row;
+  }
+  .button{
+    width:100px;
+    height:30px;
+    background:#006699;
+    color:#fff;
+    padding:3px 10px;
+    border:1px solid ;
+    margin-top:20px;
+    margin-left:30px;
+    text-align:center;
+    cursor:pointer;
+    }
+    .profile{
+    display:none;
+    text-align:center;
+    }
+    #task{
+    display:none;
+    text-align:center;
+    }
+
+    .drag-drop{
+    display:none;
+    }
+    .details-inner-block{
+    display:none;
+    }
+
+    .logout{
+    display:none;
+    }
+
+
+</style>
+<script>
+    function profile(){
+    document.getElementById("appinfo").style.display = "none";
+  document.getElementById("profile").style.display = "block";
+  document.getElementById("task").style.display = "none";
+    document.getElementById("appinfo-details").style.display = "none";
+    document.getElementById("dropZone").style.display = "none";
+    document.getElementById("logout").style.display = "none";
+  }
+function logout(){
+    document.getElementById("appinfo").style.display = "none";
+  document.getElementById("profile").style.display = "none";
+  document.getElementById("task").style.display = "none";
+    document.getElementById("appinfo-details").style.display = "none";
+    document.getElementById("dropZone").style.display = "none";
+    document.getElementById("logout").style.display = "block";
+  }
+  function homepage(){
+  document.getElementById("appinfo").style.display = "block";
+  document.getElementById("profile").style.display = "none";
+    document.getElementById("appinfo-details").style.display = "none";
+    document.getElementById("task").style.display = "none";
+    document.getElementById("dropZone").style.display = "none";
+    document.getElementById("logout").style.display = "none";
+  }
+  function showDetails(app_name, img_url, points){
+  console.log("app_name = " + app_name)
+    document.getElementById("appinfo").style.display = "none";
+    document.getElementById("appinfo-details").style.display = "block";
+    document.getElementById("dropZone").style.display = "block";
+    document.getElementById("appinfo-details-title").innerHTML = app_name;
+    document.getElementById("appinfo-details-image").src = img_url;
+    document.getElementById("appinfo-details-button").value = points;
+    document.getElementById("logout").style.display = "none";
+  }
+
+  function task(){
+  document.getElementById("appinfo").style.display = "none";
+    document.getElementById("appinfo-details").style.display = "none";
+    document.getElementById("dropZone").style.display = "none";
+  document.getElementById("task").style.display = "block";
+  document.getElementById("profile").style.display = "none";
+  document.getElementById("logout").style.display = "none";
+  }
+
+  function returnlogin(){
+  confirm("Are you sure want to logout?");}
+
+</script>
+<body>
+<div class="outermost-container">
+  <div class="outer-container">
+      {% for i in sessionDetails %}
+    <h2>Hello {{i.firstname}}</h2>
+      {% endfor %}
+  </div>
+  <div class="content-container">
+      <div class="button-container">
+        <button class="button" onclick="homepage()">Home</button><br><br>
+          <button class="button" onclick="profile()">profile</button><br><br>
+          <button class="button" onclick="task()">task</button><br><br>
+          <button class="button" onclick="logout()">logout</button>
+      </div>
+      <div  class="app-container">
+          <div id="profile" class="profile">
+              {% for i in sessionDetails %}
+              <h2>First Name: {{i.firstname}}</h2>
+              <h2>Last Name: {{i.lastname}}</h2>
+              <h2>Email:{{i.email}}</h2>
+              <h2>points:{{i.Points}}</h2>
+              {% endfor %}
+          </div>
+          <div id="logout" class="logout">
+              <a href="{% url 'logout' %}" onclick="returnlogin()">logout</a>
+          </div>
+          <div id ="task">
+              <h2>Please go to Home page to see the tasks</h2>
+          </div>
+          <div id ="appinfo-container">
+              <div id = "appinfo">
+                {% for i in objects %}
+             <div class="inner-block">
+                 <img src="{{i.App_URL}}" width="60" height="60" style="text-align:center;margin-top:20px;margin-left:20px;border:1px solid;" alt="Please provide a valid Url">
+                 <h1 style="margin-left:20px;">{{i.App_name}}</h1>
+                 <a href="">Home>twitter</a>
+                 <button  class="button" onclick="showDetails('{{i.App_name}}', '{{i.App_URL}}','{{i.points}}')">{{i.points}}</button>
+             </div>
+                {% endfor %}
+                </div>
+
+              <div id="appinfo-details" >
+                               <div  class="details-inner-block">
+                 <img id="appinfo-details-image" width="60" height="60" style="margin-top:20px;margin-left:20px;border:1px solid;" alt="Please provide a valid Url">
+                 <h1 id = "appinfo-details-title" style="text-align:center;margin-left:20px;"></h1>
+
+             </div>
+                  <div class ="drag-drop" id="dropZone" style="width: 300px; height: 150px; border: 2px dashed #ccc; padding: 20px; text-align: center;" >
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <p>Drag and drop files here.</p>
+                        <input type="file" name="abcd" >
+                         <input  id="appinfo-details-button" name="Points" type ="submit" class="button" >
+                    </form>
+                    </div>
+              </div>
+          </div>
+
+
+      </div>
+  </div>
+
+</div>
+
+</body>
+</html>

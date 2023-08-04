@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin_Login_Page</title>
+</head>
+<style>
+
+  body {
+  width:90vw;
+  height:90vh;
+  }
+
+  .parent-container {
+  width:auto;
+  height:95vh;
+  display:flex;
+  flex-direction:column;
+  }
+}
+  .header-box {
+  width:auto;
+  height:95px;
+  text-align:center;
+  }
+  .content-box {
+  width:95vw;
+  height:auto;
+  flex:1;
+  background-color: grey;
+  display:flex;
+  }
+  .button-container {
+  width:auto;
+  height:auto;
+  flex:1;
+  }
+
+  .form-container{
+  width:auto;
+  height:75vh;
+  flex:4;
+  background:#ffffff;
+  margin-top:60px;
+  border:2px solid;
+
+  }
+  .image{
+  flex:1;
+  text-align:center;
+  margin-top:30px;
+  display:none;
+  }
+
+  .form{
+  width:auto;
+  height:auto;
+  text-align:center;
+  margin:auto;
+  flex:2
+  background:#000000;
+  }
+  .button{
+    width:100px;
+    background:#006699;
+    color:#fff;
+    padding:3px 10px;
+    border:1px solid ;
+    height:30px;
+    flex:1;
+  margin:20px;
+  text-align:center;
+    cursor:pointer;
+
+  }
+
+  #homepage{
+<!--  display:none;-->
+  text-align:center;
+  }
+
+  #form{
+  display:none;
+  }
+  .form-style{
+  text-align:center;
+  color:#FFFFFF;
+  }
+
+  #points{
+<!--  display:none;-->
+  text-align:center;
+  margin-bottom:30px;
+  }
+
+</style>
+
+<script>
+   function openForm() {
+   console.log("open form called");
+  document.getElementById("form").style.display = "block";
+    document.getElementById("homepage").style.display = "none";
+}
+
+   function homepage() {
+      console.log("home page called");
+  document.getElementById("homepage").style.display = "block";
+  document.getElementById("form").style.display = "none";
+  }
+
+function add() {
+   console.log("close form called");
+  document.getElementById("add").style.display = "block";
+  document.getElementById("points").style.display = "block";
+}
+
+</script>
+
+<body>
+
+<!--<form method="post" enctype="multipart/form-data">-->
+<!--  {% csrf_token %}-->
+<!--  <input type="file" name="abcd" >-->
+<!--  <input type="submit">-->
+<!--</form>-->
+  <div class ="parent-container">
+    <div class="header-box">
+      <h1>Hello Admin</h1>
+    </div>
+      <div class="content-box">
+        <div class="button-container">
+          <button class="button" onclick="homepage()">Home</button><br><br>
+          <button class="button" onclick="openForm()">AddApp</button>
+        </div>
+        <div class="form-container">
+          <div id="homepage" class="image">
+<!--&lt;!&ndash;            <input type="file" name="Imagefile" placeholder="Select File" required>&ndash;&gt;-->
+            <h1 style="text-align:center">Welcome to Home Page</h1>
+              <h2>Add any application by clicking the Addapp Icon</h2>
+<!--<img  src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" width="100" height="45" style="text-align:center" alt="Please provide a valid Url">&ndash;&gt;-->
+            </div>
+
+          <form id="form" class="form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2 class="form-style">Add Application</h2>
+
+        <label class="form-style" for="appName"></label>
+        <input type="text" id="appName" name="appName" placeholder="Enter the app name" required>
+
+        <label class="form-style" for="appIcon"></label>
+        <input type="url" id="appIcon" name="appIcon" placeholder="Enter the URL" required><br><br><br>
+
+        <label  class="form-style"  for="appCategory"></label>
+        <select id="appCategory" name="appCategory"  required>
+          <option value="social">Social</option>
+          <option value="entertainment">Entertainment</option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label class="form-style" for="subCategory" ></label>
+        <select id="subCategory" name="subCategory"  required>
+          <option value="social">Social</option>
+          <option value="entertainment">Entertainment</option>
+        </select><br>
+          <input id="points" name="points" type ="text" style="font-size:14px;width:90px;height:23px;background:#006699;
+            color:#fff;
+            padding:3px 10px;
+            border:1px solid " placeholder="Addpoints">
+          <input type="submit" class="button" value="submit">
+        </form>
+        </div>
+      </div>
+  </div>
+ </body>
+</html>
